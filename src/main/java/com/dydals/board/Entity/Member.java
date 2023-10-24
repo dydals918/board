@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -18,8 +18,9 @@ public class Member {
     private Long id;
 
     private String name;
+    private String password;
     private String nickname;
-    private Date createDate;
+    private LocalDate createDate;
 
     @Enumerated(EnumType.STRING)
     private Grade grade;
@@ -29,4 +30,14 @@ public class Member {
 
     @OneToMany(mappedBy = "comment_member")
     private List<Comment> commentList = new ArrayList<>();
+
+    public static Member createMember(String name, String pw, String nickname){
+        Member creMember = new Member();
+        creMember.name = name;
+        creMember.password = pw;
+        creMember.nickname = nickname;
+        creMember.createDate = LocalDate.now();
+        creMember.grade = Grade.BRONZE;
+        return creMember;
+    }
 }
