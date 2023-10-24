@@ -3,7 +3,7 @@ package com.dydals.board.Dto;
 import lombok.Data;
 
 @Data
-public class RequstUser {
+public class RequstMember {
 
     private String memberId;
     private String memberPw;
