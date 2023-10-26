@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns.layout="http://ultraq.net.uz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,23 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<header>
-    <div class="nav">
-        <a href="/index.html" class="logo"></a>
-        <ul class="menu">
-            <li>
-                <a href="spr_board.html">스프링</a>
-            </li>
-            <li>
-                <a href="#">공지사항</a>
-            </li>
-        </ul>
-        <div class="sign_wrap">
-            <a href="/board/login" id="login_btn">로그인</a>
-            <a href="/board/register" id="reg_btn">회원가입</a>
-        </div>
-    </div>
-</header>
+<header th:replace="header::header"></header>
 <section>
     <div class="sec_wrap">
         <p class="sec_tit">메인페이지</p>
