@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns.layout="http://ultraq.net.uz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,7 +29,7 @@
         <div class="login_wrap">
             <p class="login_tit">회원가입</p>
             <div class="login_frm_wrap">
-                <form action="/board/register" method="post">
+                <form action="/member/register" method="post">
                     <div class="frm_id">
                         아이디 <input type="text" name="memberId" placeholder="4~12자 이내로 입력해주세요">
                     </div>
@@ -36,7 +37,7 @@
                         비밀번호 <input type="password" name="memberPw" placeholder="최소 6자 이상, 영문,숫자 필수">
                     </div>
                     <div class="frm_nic">
-                        닉네임 <input type="text" name="memberNic" placeholder="20자 이내로 입력하세요(영문,숫자 사용가능)">
+                        닉네임 <input type="text" name="memberNick" placeholder="20자 이내로 입력하세요(영문,숫자 사용가능)">
                     </div>
                     
                     <input type="submit" value="회원가입" id="submit_btn">
