@@ -8,23 +8,7 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <header>
-        <div class="nav">
-            <a href="index.html" class="logo"></a>
-            <ul class="menu">
-                <li>
-                    <a href="#">스프링</a>
-                </li>
-                <li>
-                    <a href="#">공지사항</a>
-                </li>
-            </ul>
-            <div class="sign_wrap">
-                <a href="login.html" id="login_btn">로그인</a>
-                <a href="#" id="reg_btn">회원가입</a>
-            </div>
-        </div>
-    </header>
+    <header th:replace="header::hd"></header>
     <div class="login_container reg_form">
         <div class="login_wrap">
             <p class="login_tit">회원가입</p>
