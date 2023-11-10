@@ -2,16 +2,31 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <header th:fragment="hd">
     <div class="nav">
-        <a href="/index.html" class="logo"></a>
+        <a href=".." class="logo"></a>
         <ul class="menu">
             <li>
-                <a href="spr_board.html">스프링</a>
-            </li>
-            <li>
-                <a href="#">공지사항</a>
+                <a href="/board/spr_board">스프링</a>
             </li>
         </ul>
-        <div class="sign_wrap">
+
+        <!-- 로그인 성공  -->
+        <div th:if="${session.loginNic != null}" class="sign_wrap sign_suc">
+            <!--   회원등급, 닉네임 표시    -->
+            <div class="sign_nic_wrap">
+                <span th:text="${session.loginGd}"></span>
+                <a th:text="${session.loginNic}" href="/member/mypage" id="mylnk"></a>
+                <span>님 환영합니다.</span>
+            </div>
+            <!--     로그아웃 버튼     -->
+            <div class="sign_logout_wrap">
+                <form th:action="@{logout}">
+                    <a href="/member/logout" id="logout_btn">로그아웃</a>
+                </form>
+            </div>
+        </div>
+
+        <!--  로그인 안됬을때 -->
+        <div th:unless="${session.loginNic != null}" class="sign_wrap">
             <a href="/member/login" id="login_btn">로그인</a>
             <a href="/member/register" id="reg_btn">회원가입</a>
         </div>
