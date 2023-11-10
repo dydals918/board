@@ -4,9 +4,11 @@ import com.dydals.board.Entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MemberRepositoryImpl extends JpaRepository<Member, Long> {
 
-    Member findByName(String memberName);
+    Optional<Member> findByName(String memberName);
 
 }

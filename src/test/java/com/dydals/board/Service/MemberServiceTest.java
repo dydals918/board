@@ -37,7 +37,7 @@ class MemberServiceTest {
         Member member = Member.createMember("회원1", "ㅁㄴㅇ", "회원1");
         memberRepository.save(member);
 
-        Member findMember = memberRepository.findByName("회원1");
+        Member findMember = memberRepository.findByName("회원1").get();
         System.out.println(findMember.toString());
 
         if (member.getPassword().equals(findMember.getPassword())){

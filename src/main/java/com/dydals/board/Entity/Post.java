@@ -1,14 +1,12 @@
 package com.dydals.board.Entity;
 
+import com.dydals.board.Dto.PostDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import static jakarta.persistence.FetchType.LAZY;
 
 @Getter
 @Entity
@@ -19,19 +17,35 @@ public class Post {
     @Column(name = "post_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member post_member;
+    private boolean boardCategory;
 
-    @OneToMany(mappedBy = "post")
-    private List<Comment> commentList = new ArrayList<>();
+    private String post_member;
 
     private String title;
     private String detail;
+
+    @CreationTimestamp
     private Date createDate;
 
-    private Integer views;
-    private Integer recommendation;
-    private Integer unrecommendation;
+    private Long views;
+    private Long recommendation;
+    private Long unrecommendation;
+    private Long boardCommentCnt;
+
+    public static Post toPost(PostDto postDto){
+        Post post = new Post();
+        post.id = postDto.getId();
+        post.boardCategory = postDto.isBoardCategory();
+        post.post_member = postDto.getPost_member();
+        post.createDate = postDto.getCreateDate();
+        post.title = postDto.getTitle();
+        post.detail = postDto.getDetail();
+        post.views = postDto.getViews();
+        post.recommendation = postDto.getRecommendation();
+        post.unrecommendation = postDto.getUnrecommendation();
+        post.boardCommentCnt = postDto.getBoardCommentCnt();
+
+        return post;
+    }
 
 }

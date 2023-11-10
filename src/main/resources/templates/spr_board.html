@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org"
-      xmlns.layout="http://ultraq.net.uz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header th:replace="~{header::hd}"></header>
@@ -22,29 +21,35 @@
                     <tr>
                         <th>No</th>
                         <th>제목</th>
-                        <th>댓글수</th>
                         <th>작성자</th>
                         <th>작성시간</th>
-                        <th>조회수</th>
                         <th>좋아요</th>
                         <th>싫어요</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="boardList: ${boardList}">
-                        <td th:text="${boardList.boardId}"></td>
+                        <td th:if="${boardList.boardCategory == True}" class="notice_wrap">
+                            <p th:text="공지"></p>
+                        </td>
+                        <td th:unless="${boardList.boardCategory == True}">
+                            <p th:text="${boardList.boardId}"></p>
+                        </td>
                         <td class="bd_lst_tit">
                             <a th:text="${boardList.boardTitle}" th:href="@{|/board/spr_board/${boardList.boardId}|}"></a>
                         </td>
-                        <td th:text="${boardList.boardCommentCnt}"></td>
                         <td th:text="${boardList.boardWriter}"></td>
-                        <td th:text="${boardList.boardDate}"></td>
-                        <td th:text="${boardList.boardViewCnt}"></td>
+                        <td th:text="${#dates.format(boardList.boardDate, 'yyyy.MM.dd')}"></td>
                         <td th:text="${boardList.boardLike}"></td>
                         <td th:text="${boardList.boardDislike}"></td>
                     </tr>
                     </tbody>
                 </table>
+            </div>
+            <div class="sec_bd_lst_menu">
+                <form action="/board/write" method="get">
+                    <input type="submit" value="글쓰기">
+                </form>
             </div>
             <div class="sec_bd_paging">
                 <ul>
@@ -62,5 +67,6 @@
         </div>
     </div>
 </section>
+<footer th:replace="~{footer::ft}"></footer>
 </body>
 </html>
