@@ -3,6 +3,7 @@ package com.dydals.board.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
@@ -18,7 +19,7 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", referencedColumnName = "nickname")
     private Member comment_member;
 
     @ManyToOne(fetch = LAZY)
@@ -26,7 +27,10 @@ public class Comment {
     private Post post;
 
     private String commentDetail;
+
+    @CreationTimestamp
     private Date commentDate;
+
 
 
 }

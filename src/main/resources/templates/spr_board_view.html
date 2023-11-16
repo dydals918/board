@@ -17,11 +17,11 @@
         <div class="spr_bd_context">
             <div class="bd_tit_wrap">
                 <div class="bd_lt_tit">
-                    <p th:text="${board.boardTitle}" class="bd_tit"></p>
+                    <p th:text="${board.title}" class="bd_tit"></p>
                     <div class="bd_lt_wr_info">
-                        <span th:text="${board.boardWriter}" class="bd_writer"></span>
+                        <span th:text="${board.post_member}" class="bd_writer"></span>
                         <span class="bd_writer_tier">Bronze</span>
-                        <span th:text="${board.boardDate}" class="bd_wr_time"></span>
+                        <span th:text="${board.createDate}" class="bd_wr_time"></span>
                     </div>
                 </div>
                 <div class="bd_rt_tit">
@@ -36,7 +36,22 @@
                 </div>
             </div>
             <div class="bd_cont_wrap">
-                <span th:text="${board.boardContent}" class="bd_cont"></span>
+                <span th:text="${board.detail}" class="bd_cont"></span>
+            </div>
+            <div class="bd_crud_container">
+                <div class="bd_crud_wrap">
+                    <ul>
+                        <li>
+                            <a href="#" class="share_btn">공유</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/board/update/{id}(id=${id})}">수정</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/board/delete/{id}(id=${id})}">삭제</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="bd_comment_wrap">
@@ -46,8 +61,10 @@
                     <div class="user_ico_wrap">
                         <a href="#" class="user_ico"></a>
                     </div>
-                    <textarea name="memberComment" id="memberComment" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 쓰려면 로그인이 필요합니다."></textarea>
-                    <input type="submit" value="댓글 쓰기">
+                    <form method="post" th:action="@{/board/spr_board/{id}}">
+                        <textarea name="memberComment" id="memberComment" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 쓰려면 로그인이 필요합니다."></textarea>
+                        <input type="submit" value="댓글 쓰기">
+                    </form>
                 </div>
             </div>
             <div class="bd_com_lst_container">

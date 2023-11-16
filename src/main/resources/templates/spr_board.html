@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <header th:replace="~{header::hd}"></header>
@@ -33,15 +33,15 @@
                             <p th:text="공지"></p>
                         </td>
                         <td th:unless="${boardList.boardCategory == True}">
-                            <p th:text="${boardList.boardId}"></p>
+                            <p th:text="${boardList.id}"></p>
                         </td>
                         <td class="bd_lst_tit">
-                            <a th:text="${boardList.boardTitle}" th:href="@{|/board/spr_board/${boardList.boardId}|}"></a>
+                            <a th:text="${boardList.title}" th:href="@{|/board/spr_board/${boardList.id}|}"></a>
                         </td>
-                        <td th:text="${boardList.boardWriter}"></td>
-                        <td th:text="${#dates.format(boardList.boardDate, 'yyyy.MM.dd')}"></td>
-                        <td th:text="${boardList.boardLike}"></td>
-                        <td th:text="${boardList.boardDislike}"></td>
+                        <td th:text="${boardList.post_member}"></td>
+                        <td th:text="${#dates.format(boardList.createDate, 'yyyy.MM.dd')}"></td>
+                        <td th:text="${boardList.recommendation}"></td>
+                        <td th:text="${boardList.unrecommendation}"></td>
                     </tr>
                     </tbody>
                 </table>

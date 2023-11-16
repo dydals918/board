@@ -58,6 +58,10 @@ public class PostService {
         postRepository.save(post);
     }
 
+    public void deleteByBoardDTO(PostDto postDto){
+        postRepository.deleteById(postDto.getId());
+    }
+
     public void update(Long id, PostDto postDto) {
         Optional<Post> findPost = postRepository.findById(id);
         if (findPost.isPresent()) {

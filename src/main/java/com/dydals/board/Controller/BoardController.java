@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -50,6 +51,22 @@ public class BoardController {
         String mbNic = (String)(session.getAttribute("loginNic"));
         postService.write(postDto, mbNic);
         return "redirect:/board/spr_board";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String boardDelete(@PathVariable Long id, HttpServletRequest request){
+        PostDto boardDTO = postService.findByBoardId(id);
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            if(session.getAttribute("loginNic").equals(boardDTO.getPost_member())){
+                postService.deleteByBoardDTO(boardDTO);
+                return "redirect:/board/spr_board";
+            }else {
+                return "redirect:/board/write";
+            }
+        }else{
+            return "redirect:/board/login";
+        }
     }
 
     @PostMapping("/update/{id}")

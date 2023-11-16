@@ -33,7 +33,7 @@ public class MemberController {
         if(resMem != null){
             httpServletRequest.getSession().invalidate();
             HttpSession session = httpServletRequest.getSession(true);
-            session.setAttribute("loginNic", resMem.getMemberNick());
+            session.setAttribute("loginNic", resMem.getNickname());
             session.setAttribute("loginGd", resMem.getGrade());
             return "redirect:/";
         } else {

@@ -8,8 +8,8 @@ public class RequstMember {
 
     private Long id;
     private String memberId;
-    private String memberPw;
-    private String memberNick;
+    private String password;
+    private String nickname;
     private Grade grade;
 
 }

@@ -17,7 +17,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    private String name;
+    private String memberId;
     private String password;
     private String nickname;
 
@@ -26,10 +26,12 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @OneToMany(mappedBy = "comment_member")
+    private List<Comment> commentList = new ArrayList<>();
 
-    public static Member createMember(String name, String pw, String nickname){
+    public static Member createMember(String memberId, String pw, String nickname){
         Member creMember = new Member();
-        creMember.name = name;
+        creMember.memberId = memberId;
         creMember.password = pw;
         creMember.nickname = nickname;
         creMember.createDate = LocalDateTime.now();

@@ -16,18 +16,18 @@
             <p class="sec_tit sec_bd_v_tit">스프링 게시판 - 게시글 수정</p>
         </div>
         <div class="sec_bd_input_tit">
-            <form method="post" action="@{/board/update/{id}(id=${boardId})}">
+            <form method="post" action="@{/board/update/{id}(id=${id})}">
                 <div class="bd_input_check">
                     <p>공지</p>
                     <input type="checkbox" name="boardCategory">
                 </div>
                 <div class="bd_input_tit_wrap">
                     <p class="frm_input_desc">제목</p> 
-                    <input class="frm_input" name="boardTitle" required>
+                    <input class="frm_input" name="title" required th:value="${boardList.title}>
                 </div>
                 <div class="bd_input_cont_wrap">
                     <p class="frm_input_desc">내용</p>
-                    <textarea class="frm_txtarea" name="boardContent" required></textarea>
+                    <textarea class="frm_txtarea" name="detail" required th:value="${boardList.detail}></textarea>
                 </div>	
                 <div class="bd_input_submit_wrap">
                     <input type="button" class="frm_lst" value="목록보기">

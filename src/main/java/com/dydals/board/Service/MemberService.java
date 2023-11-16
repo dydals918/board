@@ -17,9 +17,9 @@ public class MemberService {
 
     public String createUser(RequstMember requstUser) {
 
-        Member member = Member.createMember(requstUser.getMemberId(), requstUser.getMemberPw(), requstUser.getMemberNick());
+        Member member = Member.createMember(requstUser.getMemberId(), requstUser.getPassword(), requstUser.getNickname());
 
-        Optional<Member> duplMember = memberRepository.findByName(member.getName());
+        Optional<Member> duplMember = memberRepository.findByMemberId(member.getMemberId());
         if (duplMember.isPresent()) {
             return "이미 사용중인 아이디 입니다.";
         } else {
@@ -31,10 +31,10 @@ public class MemberService {
 
     public ResponseMember login(RequstMember requstUser) {
 
-        Optional<Member> findMember = memberRepository.findByName(requstUser.getMemberId());
+        Optional<Member> findMember = memberRepository.findByMemberId(requstUser.getMemberId());
         if (findMember.isPresent()) {
             ResponseMember resMem = chageDto(findMember.get());
-            if (requstUser.getMemberPw().equals(resMem.getMemberPw())) {
+            if (requstUser.getPassword().equals(resMem.getPassword())) {
                 return resMem;
             } else {
                 return null;
@@ -47,9 +47,9 @@ public class MemberService {
     private ResponseMember chageDto(Member member) {
         ResponseMember resMem = new ResponseMember();
         resMem.setId(member.getId());
-        resMem.setMemberId(member.getName());
-        resMem.setMemberPw(member.getPassword());
-        resMem.setMemberNick(member.getNickname());
+        resMem.setMemberId(member.getMemberId());
+        resMem.setPassword(member.getPassword());
+        resMem.setNickname(member.getNickname());
         resMem.setGrade(member.getGrade());
         return resMem;
     }
