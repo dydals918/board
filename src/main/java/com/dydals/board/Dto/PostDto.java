@@ -1,5 +1,6 @@
 package com.dydals.board.Dto;
 
+import com.dydals.board.Entity.Member;
 import com.dydals.board.Entity.Post;
 import lombok.Data;
 
@@ -10,7 +11,7 @@ public class PostDto {
 
     private Long id;
     private boolean boardCategory;
-    private String post_member;
+    private Member post_member;
     private String title;
     private String detail;
     private Date createDate;

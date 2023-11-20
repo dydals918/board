@@ -24,7 +24,9 @@ public class Post {
 
     private boolean boardCategory;
 
-    private String post_member;
+    @ManyToOne
+    @JoinColumn(referencedColumnName = "nickname")
+    private Member post_member;
 
     private String title;
     private String detail;

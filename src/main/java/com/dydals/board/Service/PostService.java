@@ -2,6 +2,7 @@ package com.dydals.board.Service;
 
 import com.dydals.board.Dto.PostDto;
 import com.dydals.board.Entity.Post;
+import com.dydals.board.Repository.MemberRepositoryImpl;
 import com.dydals.board.Repository.PostRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepositoryImpl postRepository;
+    private final MemberRepositoryImpl memberRepository;
 
     public List<PostDto> getAllPost() {
         List<Post> postlist = postRepository.findAll();
@@ -46,9 +48,9 @@ public class PostService {
         }
     }
 
-    public void write(PostDto postDto, String mNic){
+    public void write(PostDto postDto, String mid){
         //게시글 작성시 최초 값 초기화
-        postDto.setPost_member(mNic);
+        postDto.setPost_member(memberRepository.findByMemberId(mid).orElse(null));
         postDto.setBoardCommentCnt(0l);
         postDto.setUnrecommendation(0l);
         postDto.setRecommendation(0l);
@@ -65,9 +67,32 @@ public class PostService {
     public void update(Long id, PostDto postDto) {
         Optional<Post> findPost = postRepository.findById(id);
         if (findPost.isPresent()) {
-            Post newPost = findPost.get();
-            newPost = Post.toPost(postDto);
-            postRepository.save(newPost);
+            PostDto findPistDto = PostDto.toRequstPost(findPost.get());
+            findPistDto.setTitle(postDto.getTitle());
+            findPistDto.setDetail(postDto.getDetail());
+            Post updatePost = Post.toPost(findPistDto);
+            postRepository.save(updatePost);
+        }
+    }
+
+    public void like(PostDto postDto){
+        postDto.setRecommendation(postDto.getRecommendation()+1);
+        Post post = Post.toPost(postDto);
+        postRepository.save(post);
+    }
+
+    public void disLike(PostDto postDto){
+        postDto.setUnrecommendation(postDto.getUnrecommendation()+1);
+        Post post = Post.toPost(postDto);
+        postRepository.save(post);
+    }
+
+    public void updateViewCnt(Long id){
+        Optional<Post> post = postRepository.findById(id);
+        if(post.isPresent()){
+            PostDto postDto = PostDto.toRequstPost(post.get());
+            postDto.setViews(postDto.getViews() + 1);
+            postRepository.save(Post.toPost(postDto));
         }
     }
 }

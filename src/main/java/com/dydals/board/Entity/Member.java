@@ -29,6 +29,9 @@ public class Member {
     @OneToMany(mappedBy = "comment_member")
     private List<Comment> commentList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post_member")
+    private List<Post> postList = new ArrayList<>();
+
     public static Member createMember(String memberId, String pw, String nickname){
         Member creMember = new Member();
         creMember.memberId = memberId;

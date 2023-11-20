@@ -20,18 +20,28 @@
                     <p th:text="${board.title}" class="bd_tit"></p>
                     <div class="bd_lt_wr_info">
                         <span th:text="${board.post_member}" class="bd_writer"></span>
-                        <span class="bd_writer_tier">Bronze</span>
+                        <span class="bd_writer_tier" th:text="${board.boardMemberWriter.memberGd}"></span>
                         <span th:text="${board.createDate}" class="bd_wr_time"></span>
                     </div>
                 </div>
                 <div class="bd_rt_tit">
+                    <div class="bd_info_view_cnt">
+                        <span class="view_cnt_wrap">
+                            <i class="fa-solid fa-eye"></i>
+                            <span class="bd_info_text" th:text="${board.boardViewCnt}"></span>
+                        </span>
+                    </div>
                     <div class="bd_info_thup">
-                        <i class="fa-solid fa-thumbs-up"></i>
-                        <span class="bd_thup_cnt">1</span>
+                        <a th:href="@{/board/spr_board/{id}/like(id=${boardId})}">
+                            <i class="fa-solid fa-thumbs-up"></i>
+                            <span class="bd_info_text" th:text="${board.boardLike}"></span>
+                        </a>
                     </div>
                     <div class="bd_info_thdn">
-                        <i class="fa-regular fa-thumbs-down"></i>
-                        <span class="bd_thdn_cnt">0</span>
+                        <a th:href="@{/board/spr_board/{id}/dislike(id=${boardId})}">
+                            <i class="fa-regular fa-thumbs-down"></i>
+                            <span class="bd_info_text" th:text="${board.boardDislike}"></span>
+                        </a>
                     </div>
                 </div>
             </div>
