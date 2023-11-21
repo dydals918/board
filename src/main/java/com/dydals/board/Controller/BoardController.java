@@ -1,6 +1,8 @@
 package com.dydals.board.Controller;
 
+import com.dydals.board.Dto.CommentDto;
 import com.dydals.board.Dto.PostDto;
+import com.dydals.board.Service.CommentService;
 import com.dydals.board.Service.PostService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -20,6 +22,7 @@ import java.util.List;
 public class BoardController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     @GetMapping("/spr_board")
     public String boardForm(Model model){
@@ -30,9 +33,21 @@ public class BoardController {
 
     //게시판 뷰 페이지 이동
     @GetMapping("/spr_board/{boardId}")
-    public String sprBoardView(@PathVariable Long boardId, Model model) {
-        PostDto boardDTO = postService.findByBoardId(boardId);
-        model.addAttribute("board",boardDTO);
+    public String sprBoardView(@PathVariable Long boardId, Model model, HttpServletRequest request) {
+        PostDto postDto = postService.findByBoardId(boardId);
+        List<CommentDto> commentDTO = commentService.findByBoardId(boardId);
+        postDto.setBoardCommentCnt((long)(commentDTO.size()));
+        postService.updateViewCnt(boardId);
+
+        HttpSession session = request.getSession(false);
+        boolean sessionChk = false;
+        if(session != null){
+            sessionChk = true;
+        }
+
+        model.addAttribute("commentList",commentDTO);
+        model.addAttribute("board",postDto);
+        model.addAttribute("sessionChk",sessionChk);
         return "spr_board_view";
     }
 

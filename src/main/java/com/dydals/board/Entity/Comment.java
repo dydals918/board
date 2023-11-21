@@ -1,5 +1,6 @@
 package com.dydals.board.Entity;
 
+import com.dydals.board.Dto.CommentDto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,15 @@ public class Comment {
     @CreationTimestamp
     private Date commentDate;
 
+    public static Comment toCommentEntity(CommentDto commentDto){
+        Comment comment = new Comment();
+        comment.id = commentDto.getCommentId();
+        comment.commentDetail = commentDto.getCommentContent();
+        comment.commentDate = commentDto.getCommentDate();
+        comment.post = commentDto.getBoardNumber();
+        comment.comment_member = commentDto.getMemberWriter();
 
+        return comment;
+    }
 
 }
