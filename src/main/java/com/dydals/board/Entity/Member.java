@@ -14,11 +14,12 @@ import java.util.List;
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "member_id")
     private Long id;
 
     private String memberId;
     private String password;
+
+    @Column(unique = true)
     private String nickname;
 
     private LocalDateTime createDate;
