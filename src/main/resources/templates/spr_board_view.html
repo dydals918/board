@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <header th:replace="~{header::hd}"></header>
@@ -19,8 +19,8 @@
                 <div class="bd_lt_tit">
                     <p th:text="${board.title}" class="bd_tit"></p>
                     <div class="bd_lt_wr_info">
-                        <span th:text="${board.post_member}" class="bd_writer"></span>
-                        <span class="bd_writer_tier" th:text="${board.boardMemberWriter.memberGd}"></span>
+                        <span th:text="${board.post_member.nickname}" class="bd_writer"></span>
+                        <span class="bd_writer_tier" th:text="${board.post_member.grade}"></span>
                         <span th:text="${board.createDate}" class="bd_wr_time"></span>
                     </div>
                 </div>
@@ -28,19 +28,19 @@
                     <div class="bd_info_view_cnt">
                         <span class="view_cnt_wrap">
                             <i class="fa-solid fa-eye"></i>
-                            <span class="bd_info_text" th:text="${board.boardViewCnt}"></span>
+                            <span class="bd_info_text" th:text="${board.views}"></span>
                         </span>
                     </div>
                     <div class="bd_info_thup">
-                        <a th:href="@{/board/spr_board/{id}/like(id=${boardId})}">
+                        <a th:href="@{/board/spr_board/{id}/like(id=${id})}">
                             <i class="fa-solid fa-thumbs-up"></i>
-                            <span class="bd_info_text" th:text="${board.boardLike}"></span>
+                            <span class="bd_info_text" th:text="${board.recommendation}"></span>
                         </a>
                     </div>
                     <div class="bd_info_thdn">
-                        <a th:href="@{/board/spr_board/{id}/dislike(id=${boardId})}">
+                        <a th:href="@{/board/spr_board/{id}/dislike(id=${id})}">
                             <i class="fa-regular fa-thumbs-down"></i>
-                            <span class="bd_info_text" th:text="${board.boardDislike}"></span>
+                            <span class="bd_info_text" th:text="${board.unrecommendation}"></span>
                         </a>
                     </div>
                 </div>
@@ -65,50 +65,33 @@
             </div>
         </div>
         <div class="bd_comment_wrap">
-            <p class="bd_com_tit">2개의 댓글</p>
+            <p class="bd_com_tit" th:text="@{|${board.boardCommentCnt}개의 댓글|}"></p>
             <div class="bd_com_input_container">
                 <div class="bd_com_input_wrap">
                     <div class="user_ico_wrap">
                         <a href="#" class="user_ico"></a>
                     </div>
-                    <form method="post" th:action="@{/board/spr_board/{id}}">
-                        <textarea name="memberComment" id="memberComment" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 쓰려면 로그인이 필요합니다."></textarea>
+                    <form method="post" th:action="@{/board/spr_board/{id}(id=${id})}">
+                        <textarea name="commentContent" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 쓰려면 로그인이 필요합니다." th:if="${!sessionChk}"></textarea>
+                        <textarea name="commentContent" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 작성해주세요." th:if="${sessionChk}"></textarea>
                         <input type="submit" value="댓글 쓰기">
                     </form>
                 </div>
             </div>
             <div class="bd_com_lst_container">
                 <ul class="bd_com_lst_wrap">
-                    <li>
+                    <li th:each="commentList: ${commentList}">
                         <div class="bd_com_lst">
                             <div class="user_ico_wrap">
                                 <a href="#" class="user_ico"></a>
                                 <div class="com_user_info">
-                                    <p class="com_user_name">고양이애호가 임꺽정</p>
-                                    <span class="com_user_tier">Bronze</span>
-                                    <span class="com_user_wr_time">약 3시간전</span>
+                                    <p class="com_user_name" th:text="${commentList.memberWriter.nickname}"></p>
+                                    <span class="com_user_tier" th:text="${commentList.memberWriter.grade}"></span>
+                                    <span class="com_user_wr_time" th:text="${commentList.commentDate}"></span>
                                 </div>
                             </div>
                             <div class="bd_com_txt_wrap">
-                                <span class="bd_com_txt">저렇게 만들면 컴파일 에러가 발생하지는 않겠죠?
-                                    코드상으로는 문제가 없어보입니다만.. 한번 컴파일 해봐야겠네요.
-                                </span>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="bd_com_lst">
-                            <div class="user_ico_wrap">
-                                <a href="#" class="user_ico"></a>
-                                <div class="com_user_info">
-                                    <p class="com_user_name">파이썬으로 세계정복</p>
-                                    <span class="com_user_tier">Silver</span>
-                                    <span class="com_user_wr_time">약 1시간전</span>
-                                </div>
-                            </div>
-                            <div class="bd_com_txt_wrap">
-                                <span class="bd_com_txt">좋은정보 감사합니다.<br>
-                                    짧은지식을 보충할 수 있는 좋은 계기가 되었습니다.
+                                <span class="bd_com_txt" th:text="${commentList.commentContent}">
                                 </span>
                             </div>
                         </div>
@@ -118,6 +101,6 @@
         </div>
     </div>
 </section>
-<footer th:replace="footer::footer"></footer>
+<footer th:replace="~{footer::ft}"></footer>
 </body>
 </html>

@@ -35,7 +35,7 @@ public class BoardController {
     @GetMapping("/spr_board/{boardId}")
     public String sprBoardView(@PathVariable Long boardId, Model model, HttpServletRequest request) {
         PostDto postDto = postService.findByBoardId(boardId);
-        List<CommentDto> commentDTO = commentService.findByBoardId(boardId);
+        List<CommentDto> commentDTO = commentService.findByPostId(boardId);
         postDto.setBoardCommentCnt((long)(commentDTO.size()));
         postService.updateViewCnt(boardId);
 

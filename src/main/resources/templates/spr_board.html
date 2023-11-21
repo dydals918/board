@@ -38,7 +38,7 @@
                         <td class="bd_lst_tit">
                             <a th:text="${boardList.title}" th:href="@{|/board/spr_board/${boardList.id}|}"></a>
                         </td>
-                        <td th:text="${boardList.post_member}"></td>
+                        <td th:text="${boardList.post_member.nickname}"></td>
                         <td th:text="${#dates.format(boardList.createDate, 'yyyy.MM.dd')}"></td>
                         <td th:text="${boardList.recommendation}"></td>
                         <td th:text="${boardList.unrecommendation}"></td>

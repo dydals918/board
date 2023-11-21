@@ -30,8 +30,8 @@ public class CommentService {
     }
 
 
-    public List<CommentDto> findByBoardId(Long boardId) {
-        List<Comment> commentEntityList = commentRepository.findAllByBoardNumber_BoardId(boardId);
+    public List<CommentDto> findByPostId(Long postId) {
+        List<Comment> commentEntityList = commentRepository.findAllByPost_Id(postId);
         List<CommentDto> commentDTOS = new ArrayList<>();
 
         for(Comment commentEntity : commentEntityList){

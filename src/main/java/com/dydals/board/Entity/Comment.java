@@ -20,7 +20,7 @@ public class Comment {
     private Long id;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id", referencedColumnName = "nickname")
+    @JoinColumn(referencedColumnName = "nickname")
     private Member comment_member;
 
     @ManyToOne(fetch = LAZY)
