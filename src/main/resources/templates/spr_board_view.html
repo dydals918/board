@@ -32,13 +32,13 @@
                         </span>
                     </div>
                     <div class="bd_info_thup">
-                        <a th:href="@{/board/spr_board/{id}/like(id=${id})}">
+                        <a th:href="@{/board/spr_board/{id}/like(id=${boardId})}">
                             <i class="fa-solid fa-thumbs-up"></i>
                             <span class="bd_info_text" th:text="${board.recommendation}"></span>
                         </a>
                     </div>
                     <div class="bd_info_thdn">
-                        <a th:href="@{/board/spr_board/{id}/dislike(id=${id})}">
+                        <a th:href="@{/board/spr_board/{id}/dislike(id=${boardId})}">
                             <i class="fa-regular fa-thumbs-down"></i>
                             <span class="bd_info_text" th:text="${board.unrecommendation}"></span>
                         </a>
@@ -55,10 +55,10 @@
                             <a href="#" class="share_btn">공유</a>
                         </li>
                         <li>
-                            <a th:href="@{/board/update/{id}(id=${id})}">수정</a>
+                            <a th:href="@{/board/update/{id}(id=${boardId})}">수정</a>
                         </li>
                         <li>
-                            <a th:href="@{/board/delete/{id}(id=${id})}">삭제</a>
+                            <a th:href="@{/board/delete/{id}(id=${boardId})}">삭제</a>
                         </li>
                     </ul>
                 </div>
@@ -71,7 +71,7 @@
                     <div class="user_ico_wrap">
                         <a href="#" class="user_ico"></a>
                     </div>
-                    <form method="post" th:action="@{/board/spr_board/{id}(id=${id})}">
+                    <form method="post" th:action="@{/board/spr_board/{id}(id=${boardId})}">
                         <textarea name="commentContent" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 쓰려면 로그인이 필요합니다." th:if="${!sessionChk}"></textarea>
                         <textarea name="commentContent" cols="30" rows="10" class="bd_com_txtarea" placeholder="댓글을 작성해주세요." th:if="${sessionChk}"></textarea>
                         <input type="submit" value="댓글 쓰기">
