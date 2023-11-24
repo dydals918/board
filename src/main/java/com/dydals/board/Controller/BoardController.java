@@ -73,7 +73,7 @@ public class BoardController {
         PostDto boardDTO = postService.findByBoardId(id);
         HttpSession session = request.getSession(false);
         if(session != null){
-            if(session.getAttribute("loginNic").equals(boardDTO.getPost_member())){
+            if(session.getAttribute("loginNic").equals(boardDTO.getPost_member().getNickname())){
                 postService.deleteByBoardDTO(boardDTO);
                 return "redirect:/board/spr_board";
             }else {
@@ -84,12 +84,14 @@ public class BoardController {
         }
     }
 
-    @GetMapping("/board/update/{id}")
+    @GetMapping("/update/{id}")
     public String boardUpdate(@PathVariable Long id, HttpServletRequest request, Model model){
+
         PostDto postDto = postService.findByBoardId(id);
         HttpSession session = request.getSession(false);
+
         if(session != null){
-            if(session.getAttribute("loginNic").equals(postDto.getPost_member())){
+            if(session.getAttribute("loginNic").equals(postDto.getPost_member().getNickname())){
                 model.addAttribute("boardList",postDto);
                 return "update";
             }else {
@@ -101,9 +103,11 @@ public class BoardController {
     }
 
     @PostMapping("/update/{id}")
-    public String boardUpdate(@PathVariable Long id, PostDto postDto){
-        postService.update(id, postDto);
-        return "redirect:/spr_board";
+    public String boardUpdate(@PathVariable Long id, PostDto postDto, Model model){
+        PostDto updatePostDto = postService.update(id, postDto);
+        log.info(updatePostDto.getTitle(), updatePostDto.getId());
+        model.addAttribute("boardList",updatePostDto);
+        return "redirect:/board/spr_board";
     }
 
     @GetMapping("/spr_board/{id}/like")

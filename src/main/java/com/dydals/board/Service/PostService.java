@@ -64,15 +64,17 @@ public class PostService {
         postRepository.deleteById(postDto.getId());
     }
 
-    public void update(Long id, PostDto postDto) {
+    public PostDto update(Long id, PostDto postDto) {
         Optional<Post> findPost = postRepository.findById(id);
         if (findPost.isPresent()) {
-            PostDto findPistDto = PostDto.toRequstPost(findPost.get());
-            findPistDto.setTitle(postDto.getTitle());
-            findPistDto.setDetail(postDto.getDetail());
-            Post updatePost = Post.toPost(findPistDto);
-            postRepository.save(updatePost);
+            PostDto findPostDto = PostDto.toRequstPost(findPost.get());
+            findPostDto.setTitle(postDto.getTitle());
+            findPostDto.setDetail(postDto.getDetail());
+            Post updatePost = Post.toPost(findPostDto);
+
+            return PostDto.toRequstPost(postRepository.save(updatePost));
         }
+        return null;
     }
 
     public void like(PostDto postDto){
