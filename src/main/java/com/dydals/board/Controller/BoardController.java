@@ -84,10 +84,51 @@ public class BoardController {
         }
     }
 
+    @GetMapping("/board/update/{id}")
+    public String boardUpdate(@PathVariable Long id, HttpServletRequest request, Model model){
+        PostDto postDto = postService.findByBoardId(id);
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            if(session.getAttribute("loginNic").equals(postDto.getPost_member())){
+                model.addAttribute("boardList",postDto);
+                return "update";
+            }else {
+                return "redirect:/board/write";
+            }
+        }else{
+            return "redirect:/board/login";
+        }
+    }
+
     @PostMapping("/update/{id}")
     public String boardUpdate(@PathVariable Long id, PostDto postDto){
         postService.update(id, postDto);
         return "redirect:/spr_board";
     }
 
+    @GetMapping("/spr_board/{id}/like")
+    public String boardLike(@PathVariable Long id, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            PostDto postDto = postService.findByBoardId(id);
+            postService.like(postDto);
+            return "redirect:/board/spr_board/{id}";
+        }else{
+            return "login";
+        }
+    }
+
+    @GetMapping("/spr_board/{id}/dislike")
+    public String boardDisLike(@PathVariable Long id, HttpServletRequest request){
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            PostDto postDto = postService.findByBoardId(id);
+            postService.disLike(postDto);
+            return "redirect:/board/spr_board/{id}";
+        }else{
+            return "login";
+        }
+    }
+
 }
+
