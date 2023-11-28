@@ -12,4 +12,5 @@ public interface CommentRepositoryImpl extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByPost_Id(Long id);
 
+    List<Comment> findAllByCommentMember_Nickname(String nickname);
 }

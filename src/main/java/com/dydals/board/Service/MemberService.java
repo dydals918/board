@@ -1,7 +1,6 @@
 package com.dydals.board.Service;
 
-import com.dydals.board.Dto.RequstMember;
-import com.dydals.board.Dto.ResponseMember;
+import com.dydals.board.Dto.MemberDto;
 import com.dydals.board.Entity.Member;
 import com.dydals.board.Repository.MemberRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +14,7 @@ public class MemberService {
 
     private final MemberRepositoryImpl memberRepository;
 
-    public String createUser(RequstMember requstUser) {
+    public String createUser(MemberDto requstUser) {
 
         Member member = Member.createMember(requstUser.getMemberId(), requstUser.getPassword(), requstUser.getNickname());
 
@@ -29,11 +28,11 @@ public class MemberService {
 
     }
 
-    public ResponseMember login(RequstMember requstUser) {
+    public MemberDto login(MemberDto requstUser) {
 
         Optional<Member> findMember = memberRepository.findByMemberId(requstUser.getMemberId());
         if (findMember.isPresent()) {
-            ResponseMember resMem = chageDto(findMember.get());
+            MemberDto resMem = MemberDto.toMemberDto(findMember.get());
             if (requstUser.getPassword().equals(resMem.getPassword())) {
                 return resMem;
             } else {
@@ -44,14 +43,21 @@ public class MemberService {
         }
     }
 
-    private ResponseMember chageDto(Member member) {
-        ResponseMember resMem = new ResponseMember();
-        resMem.setId(member.getId());
-        resMem.setMemberId(member.getMemberId());
-        resMem.setPassword(member.getPassword());
-        resMem.setNickname(member.getNickname());
-        resMem.setGrade(member.getGrade());
-        return resMem;
+    public MemberDto findByMemberid(String memberId) {
+        Optional<Member> optionalMemberEntity = memberRepository.findByMemberId(memberId);
+        if(optionalMemberEntity.isPresent()){
+            Member member = optionalMemberEntity.get();
+            return MemberDto.toMemberDto(member);
+        }
+        return null;
     }
 
+    public int findMemberVisitCnt(String memberId) {
+        Optional<Member> findmember = memberRepository.findByMemberId(memberId);
+        if (findmember.isPresent()){
+            Member member = findmember.get();
+            return member.getMemberVisitCnt();
+        }
+        return 0;
+    }
 }

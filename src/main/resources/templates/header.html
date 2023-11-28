@@ -13,7 +13,10 @@
         <div th:if="${session.loginNic != null}" class="sign_wrap sign_suc">
             <!--   회원등급, 닉네임 표시    -->
             <div class="sign_nic_wrap">
-                <span th:text="${session.loginGd}"></span>
+                <span th:if="${#strings.equals(session.loginGd, 'Bronze')}">🥉</span>
+                <span th:if="${#strings.equals(session.loginGd, 'Silver')}">🥈</span>
+                <span th:if="${#strings.equals(session.loginGd, 'Gold')}">🥇</span>
+                <!--                <span th:text="${session.loginGd}"></span>-->
                 <a th:text="${session.loginNic}" href="/member/mypage" id="mylnk"></a>
                 <span>님 환영합니다.</span>
             </div>

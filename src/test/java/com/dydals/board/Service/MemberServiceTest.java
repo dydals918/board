@@ -1,6 +1,6 @@
 package com.dydals.board.Service;
 
-import com.dydals.board.Dto.RequstMember;
+import com.dydals.board.Dto.MemberDto;
 import com.dydals.board.Entity.Member;
 import com.dydals.board.Repository.MemberRepositoryImpl;
 import jakarta.transaction.Transactional;
@@ -18,7 +18,7 @@ class MemberServiceTest {
 
     @Test
     public void 회원가입(){
-        RequstMember requstUser = new RequstMember();
+        MemberDto requstUser = new MemberDto();
         requstUser.setMemberId("회원1");
         requstUser.setMemberPw("qwe");
         requstUser.setMemberNick("회원2");

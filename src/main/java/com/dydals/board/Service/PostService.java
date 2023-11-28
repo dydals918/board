@@ -97,4 +97,18 @@ public class PostService {
             postRepository.save(Post.toPost(postDto));
         }
     }
+
+    public List<PostDto> findByPostMember(String name){
+        List<Post> postList = postRepository.findAllByPostMember_Nickname(name);
+
+        return postList.stream()
+                .map(post -> PostDto.toRequstPost(post))
+                .collect(Collectors.toList());
+    }
+
+    public int findByPostCount(String nickname) {
+        /*회원 닉네임으로 게시글 찾기*/
+        List<Post> postList = postRepository.findAllByPostMember_Nickname(nickname);
+        return postList.size();
+    }
 }

@@ -41,4 +41,10 @@ public class CommentService {
         return commentDTOS;
     }
 
+    public int findByCommentWriteCnt(String nickname) {
+
+        List<Comment> commentList = commentRepository.findAllByCommentMember_Nickname(nickname);
+        return commentList.size();
+
+    }
 }

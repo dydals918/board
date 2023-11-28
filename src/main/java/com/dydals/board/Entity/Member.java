@@ -27,6 +27,9 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
+    @Column(columnDefinition = "int default 0")
+    private int memberVisitCnt;
+
     @OneToMany(mappedBy = "comment_member")
     private List<Comment> commentList = new ArrayList<>();
 
@@ -40,6 +43,7 @@ public class Member {
         creMember.nickname = nickname;
         creMember.createDate = LocalDateTime.now();
         creMember.grade = Grade.BRONZE;
+        creMember.memberVisitCnt = 0;
         return creMember;
     }
 }
